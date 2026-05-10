@@ -20,7 +20,7 @@ app.use('/api/logs', require('./routes/logs'));
 
 app.get('/', (req, res) => res.json({ message: '🚀 Actify API running' }));
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3001;
 
 getDb().then(() => {
   app.listen(PORT, () => {
