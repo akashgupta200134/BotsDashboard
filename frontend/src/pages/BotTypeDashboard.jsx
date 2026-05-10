@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Plus, RefreshCw } from 'lucide-react';
 import api from '../api/axios';
-import BotCard from '../components/BotCard';
+import BotCard from '../components/Botcard';
 import BotModal, { BOT_TYPES } from '../components/BotModal';
 import toast from 'react-hot-toast';
 
