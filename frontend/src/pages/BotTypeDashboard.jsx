@@ -52,16 +52,16 @@ export default function BotTypeDashboard({ type }) {
     try {
       if (editBot) {
         await api.put(`/bots/${editBot.id}`, form);
-        toast.success('Bot updated!');
+        toast.success('Agent updated!');
       } else {
         await api.post('/bots', { ...form, type });
-        toast.success('Bot added!');
+        toast.success('Agent added!');
       }
       setModalOpen(false);
       setEditBot(null);
       load();
     } catch {
-      toast.error('Failed to save bot');
+      toast.error('Failed to save agent');
     }
   };
 
@@ -69,7 +69,7 @@ export default function BotTypeDashboard({ type }) {
     if (!window.confirm(`Delete "${bot.name}"?`)) return;
     try {
       await api.delete(`/bots/${bot.id}`);
-      toast.success('Bot deleted');
+      toast.success('Agent deleted');
       load();
     } catch (e) {
       toast.error(e.response?.data?.message || 'Failed to delete');
@@ -87,27 +87,27 @@ export default function BotTypeDashboard({ type }) {
             <Icon size={20} className={colors.text} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">{botType.label} Bots</h2>
-            <p className="text-slate-500 text-sm">{botType.sub}</p>
+            <h2 className="text-xl font-bold text-black">{botType.label}</h2>
+            <p className="text-slate-600 text-sm">{botType.sub}</p>
           </div>
         </div>
         <div className="flex gap-2">
-          <button onClick={load} className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg transition-colors">
+          <button onClick={load} className="p-2 bg-slate-800 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors">
             <RefreshCw size={15} />
           </button>
           <button onClick={() => { setEditBot(null); setModalOpen(true); }}
             className={`flex items-center gap-2 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg ${colors.btn}`}>
-            <Plus size={15} /> Add {botType.label} Bot
+            <Plus size={16} /> Add {botType.label}
           </button>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3">
-        {[['Idle', 'idle', 'text-slate-400'], ['Running', 'running', 'text-blue-400'], ['Success', 'success', 'text-green-400'], ['Failed', 'failed', 'text-red-400']].map(([label, s, color]) => (
-          <div key={s} className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
+        {[['Idle', 'idle', 'text-slate-600'], ['Running', 'running', 'text-blue-500'], ['Success', 'success', 'text-green-500'], ['Failed', 'failed', 'text-red-500']].map(([label, s, color]) => (
+          <div key={s} className="bg-white border border-slate-300  shadow-sm rounded-xl p-3 text-center">
             <div className={`text-xl font-bold ${color}`}>{stat(s)}</div>
-            <div className="text-xs text-slate-600 mt-0.5">{label}</div>
+            <div className="text-sm text-slate-900 mt-0.5">{label}</div>
           </div>
         ))}
       </div>
@@ -118,11 +118,11 @@ export default function BotTypeDashboard({ type }) {
       ) : bots.length === 0 ? (
         <div className="flex flex-col items-center py-20 bg-slate-900 border border-slate-800 rounded-xl">
           <Icon size={44} className="text-slate-700 mb-3" />
-          <p className="text-slate-400 font-medium">No {botType.label} bots yet</p>
-          <p className="text-slate-600 text-sm mt-1 mb-4">Add your first bot to get started</p>
+          <p className="text-slate-400 font-medium">No {botType.label} Agents yet</p>
+          <p className="text-slate-600 text-sm mt-1 mb-4">Add your first Agent to get started</p>
           <button onClick={() => { setEditBot(null); setModalOpen(true); }}
             className={`flex items-center gap-2 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ${colors.btn}`}>
-            <Plus size={15} /> Add {botType.label} Bot
+            <Plus size={15}/> Add {botType.label} Agent
           </button>
         </div>
       ) : (

@@ -40,16 +40,16 @@ export default function PADDashboard() {
     try {
       if (editBot) {
         await api.put(`/bots/${editBot.id}`, form);
-        toast.success('Bot updated!');
+        toast.success('Agent updated!');
       } else {
         await api.post('/bots', { ...form, type: 'PAD' });
-        toast.success('Bot added!');
+        toast.success('Agent added!');
       }
       setModalOpen(false);
       setEditBot(null);
       load();
     } catch {
-      toast.error('Failed to save bot');
+      toast.error('Failed to save agent');
     }
   };
 
@@ -57,7 +57,7 @@ export default function PADDashboard() {
     if (!window.confirm(`Delete "${bot.name}"? This will also remove its logs.`)) return;
     try {
       await api.delete(`/bots/${bot.id}`);
-      toast.success('Bot deleted');
+      toast.success('Agent deleted');
       load();
     } catch (e) {
       toast.error(e.response?.data?.message || 'Failed to delete');
@@ -78,7 +78,7 @@ export default function PADDashboard() {
             <Bot size={20} className="text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">PAD Bots</h2>
+            <h2 className="text-xl font-bold text-white">PAD Agents</h2>
             <p className="text-slate-500 text-sm">Power Automate Desktop automations</p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function PADDashboard() {
           </button>
           <button onClick={openAdd}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-500/20">
-            <Plus size={15} /> Add PAD Bot
+            <Plus size={15} /> Add PAD Agents
           </button>
         </div>
       </div>
@@ -108,13 +108,13 @@ export default function PADDashboard() {
       {loading ? (
         <div className="text-center py-16 text-slate-500">Loading...</div>
       ) : bots.length === 0 ? (
-        <div className="flex flex-col items-center py-20 bg-slate-900 border border-slate-800 rounded-xl">
+        <div className="flex flex-col items-center py-20 bg-white border border-slate-800 rounded-xl">
           <Bot size={44} className="text-slate-700 mb-3" />
-          <p className="text-slate-400 font-medium">No PAD bots yet</p>
-          <p className="text-slate-600 text-sm mt-1 mb-4">Add your first PAD bot to get started</p>
+          <p className="text-slate-900 font-medium">No PAD Agents yet</p>
+          <p className="text-slate-700 text-sm mt-1 mb-4">Add your first PAD Agents to get started</p>
           <button onClick={openAdd}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <Plus size={15} /> Add PAD Bot
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-slate-900 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            <Plus size={15} /> Add PAD Agent
           </button>
         </div>
       ) : (

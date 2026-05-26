@@ -56,11 +56,11 @@ export default function Logs() {
             <FileText size={20} className="text-violet-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Execution Logs</h2>
-            <p className="text-slate-500 text-sm">Full history of every bot run</p>
+            <h2 className="text-xl font-bold text-black">Execution Logs</h2>
+            <p className="text-slate-600 text-sm">Full history of every agents run</p>
           </div>
         </div>
-        <button onClick={load} className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg transition-colors">
+        <button onClick={load} className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-50 rounded-lg transition-colors">
           <RefreshCw size={15} />
         </button>
       </div>
@@ -70,7 +70,7 @@ export default function Logs() {
         {filters.map(f => (
           <button key={f} onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors capitalize ${
-              filter === f ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+              filter === f ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
             }`}>
             {f}
           </button>
@@ -81,13 +81,13 @@ export default function Logs() {
       </div>
 
       {/* Log list */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white border border-slate-400 rounded-xl overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-slate-500">Loading logs...</div>
         ) : filtered.length === 0 ? (
           <div className="py-16 text-center text-slate-600">No logs found</div>
         ) : (
-          <div className="divide-y divide-slate-800">
+          <div className="divide-y divide-slate-300">
             {filtered.map(log => (
               <div key={log.id}>
                 {/* Log row */}
@@ -95,7 +95,7 @@ export default function Logs() {
                   <span className={`w-2 h-2 rounded-full flex-shrink-0 ${DOT[log.status] || 'bg-slate-500'}`} />
 
                   <div className="flex-1 flex items-center gap-2 min-w-0">
-                    <span className="text-white text-sm font-medium truncate">{log.bot_name}</span>
+                    <span className="text-slate-800 text-sm font-medium truncate">{log.bot_name}</span>
                     <span className={`px-2 py-0.5 rounded-md text-xs font-medium flex-shrink-0 ${log.bot_type === 'PAD' ? 'bg-blue-500/20 text-blue-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
                       {log.bot_type}
                     </span>

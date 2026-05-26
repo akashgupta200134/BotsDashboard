@@ -75,9 +75,9 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-slate-600 mt-4">
+        {/* <p className="text-center text-xs text-slate-600 mt-4">
           Default: <span className="text-slate-500">Akash</span> / <span className="text-slate-500">123456</span>
-        </p>
+        </p> */}
       </div>
     </div>
   );

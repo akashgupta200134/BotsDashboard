@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import Automations from './pages/Automations';  
 import Logs from './pages/Logs';
 import BotTypeDashboard from './pages/BotTypeDashboard';
 import { BOT_TYPES } from './components/BotModal';
@@ -18,6 +19,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
+        <Route path="automations" element={<Automations />} />
           <Route index element={<Dashboard />} />
           {BOT_TYPES.map(t => (
             <Route
