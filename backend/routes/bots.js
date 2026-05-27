@@ -19,6 +19,7 @@ async function sendEmail(to, botName, status, output) {
         pass: process.env.EMAIL_PASS,
       },
     });
+    
 
     const isSuccess = status === 'success';
     const statusColor  = isSuccess ? '#16a34a' : '#dc2626';
@@ -254,3 +255,4 @@ router.post('/:id/run', async (req, res) => {
 });
 
 module.exports = router;
+
