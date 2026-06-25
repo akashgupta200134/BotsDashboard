@@ -7,6 +7,8 @@ import Automations from './pages/Automations';
 import Logs from './pages/Logs';
 import BotTypeDashboard from './pages/BotTypeDashboard';
 import { BOT_TYPES } from './components/BotModal';
+import Analytics from './pages/Analytcs';
+
 
 function PrivateRoute({ children }) {
   return localStorage.getItem('token') ? children : <Navigate to="/login" replace />;
@@ -20,6 +22,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
         <Route path="automations" element={<Automations />} />
+        <Route path="analytics" element={<Analytics />} />
           <Route index element={<Dashboard />} />
           {BOT_TYPES.map(t => (
             <Route

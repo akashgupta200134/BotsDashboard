@@ -19,7 +19,6 @@ async function sendEmail(to, botName, status, output) {
         pass: process.env.EMAIL_PASS,
       },
     });
-    
 
     const isSuccess = status === 'success';
     const statusColor  = isSuccess ? '#16a34a' : '#dc2626';
@@ -37,7 +36,6 @@ async function sendEmail(to, botName, status, output) {
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:40px 20px">
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
@@ -65,8 +63,6 @@ async function sendEmail(to, botName, status, output) {
         <!-- Body -->
         <tr>
           <td style="background:#ffffff;padding:32px;border-left:4px solid ${statusColor};border-right:4px solid ${statusColor}">
-
-            <!-- Bot Info -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px">
               <tr>
                 <td style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px">
@@ -96,7 +92,6 @@ async function sendEmail(to, botName, status, output) {
               </tr>
             </table>
 
-            <!-- Output -->
             ${output ? `
             <div style="margin-bottom:8px">
               <span style="color:#94a3b8;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px">
@@ -107,7 +102,6 @@ async function sendEmail(to, botName, status, output) {
               <pre style="margin:0;color:${isSuccess ? '#4ade80' : '#f87171'};font-size:12px;font-family:'Courier New',Courier,monospace;white-space:pre-wrap;word-break:break-all;line-height:1.6">${output}</pre>
             </div>
             ` : ''}
-
           </td>
         </tr>
 
@@ -122,7 +116,6 @@ async function sendEmail(to, botName, status, output) {
       </table>
     </td></tr>
   </table>
-
 </body>
 </html>
       `,
@@ -196,6 +189,15 @@ router.put('/:id', async (req, res) => {
       email ?? bot.email,
       req.params.id
     );
+
+    // ✅ Sync all old logs to current bot name & type
+    await db.run(
+      'UPDATE logs SET bot_name=?, bot_type=? WHERE bot_id=?',
+      name ?? bot.name,
+      type ?? bot.type,
+      req.params.id
+    );
+
     const updated = await db.get('SELECT * FROM bots WHERE id = ?', req.params.id);
     res.json(updated);
   } catch { res.status(500).json({ message: 'Server error' }); }
@@ -232,13 +234,12 @@ router.post('/:id/run', async (req, res) => {
     );
     const logId = logResult.lastID;
 
-    // Respond immediately — run in background
     res.json({ message: 'Bot started', status: 'running' });
 
     exec(bot.command, { timeout: 300000 }, async (error, stdout, stderr) => {
-      const endedAt = new Date().toISOString();
-      const status = error ? 'failed' : 'success';
-      const output = stdout || '';
+      const endedAt  = new Date().toISOString();
+      const status   = error ? 'failed' : 'success';
+      const output   = stdout || '';
       const errorMsg = stderr || (error ? error.message : '');
 
       const db2 = await getDb();
@@ -255,4 +256,3 @@ router.post('/:id/run', async (req, res) => {
 });
 
 module.exports = router;
-

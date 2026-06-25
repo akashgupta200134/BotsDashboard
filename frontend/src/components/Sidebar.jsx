@@ -1,10 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, FileText,LayoutGrid, Zap } from 'lucide-react';
 import { BOT_TYPES } from './BotModal';
+import { BarChart2 } from 'lucide-react';
 
 const links = [
   { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
   { to: '/automations',  label: 'Automations',  icon: LayoutGrid },
+  { to: '/analytics', label: 'Analytics', icon: BarChart2 },
+
   ...BOT_TYPES.map(t => ({
     to: `/${t.value.toLowerCase()}`,
     label: t.label,
